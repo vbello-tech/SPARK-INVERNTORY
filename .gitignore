@@ -1,0 +1,15 @@
+# created by virtualenv automatically
+
+.idea/
+venv
+db.sqlite3
+.env
+./__pycache__/
+spark/__pycache__/
+spark/settings/__pycache__/
+templates/__pycache__/
+templates/.DS_Store
+templates/registrations/.DS_Store
+templates/registrations/__pycache__/
+staticfiles/
+.DS_Store

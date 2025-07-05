@@ -11,5 +11,7 @@ templates/__pycache__/
 templates/.DS_Store
 templates/registrations/.DS_Store
 templates/registrations/__pycache__/
+store/__pycache__/
+store/migrations/__pycache__/
 staticfiles/
 .DS_Store

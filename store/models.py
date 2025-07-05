@@ -23,7 +23,7 @@ class Colour(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=300)
-    colour = models.ManyToManyField(Colour)
+    colour = models.ManyToManyField('Colour')
     type = models.ForeignKey('ProductCategory', related_name="product_category", on_delete=models.CASCADE)
     serial_no = models.IntegerField()
     spec = models.CharField(max_length=300)

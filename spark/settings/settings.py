@@ -2,8 +2,10 @@
 Django settings for spark project.
 """
 
-from pathlib import Path
 import os
+import dj_database_url
+
+from pathlib import Path
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -18,18 +20,12 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = [
-    "sparkict.sevalla.app",
-    '0.0.0.0',
-    'localhost',
-    '127.0.0.1',
-]
-
 # Application definition
 
 INSTALLED_APPS = [
     # project apps
     'store',
+    'accounts',
 
     # django apps
     'django.contrib.admin',
@@ -43,6 +39,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'gunicorn',
     'whitenoise',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -114,9 +111,27 @@ USE_I18N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
+# https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+# phonenumberfield
+PHONENUMBER_DB_FORMAT = 'E164'
+PHONENUMBER_DEFAULT_FORMAT = 'E164'
+PHONENUMBER_DEFAULT_REGION = 'NG'
+
+# USER AUTHENTICATION SETTINGS
+AUTH_USER_MODEL = "accounts.User"
+# LOGIN_REDIRECT_URL = "dashboard"
+# LOGOUT_REDIRECT_URL = "user:login"
+# LOGIN_URL = "user:login"
+# LOGOUT_URL = "user:logout"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

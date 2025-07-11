@@ -21,12 +21,21 @@ class Colour(models.Model):
         return self.colour
 
 
+Type_Choice = [
+    ('Used', 'Used'),
+    ('UK', 'UK'),
+    ('China', 'China'),
+]
+
+
 class Product(models.Model):
     name = models.CharField(max_length=300)
-    colour = models.ManyToManyField('Colour')
-    type = models.ForeignKey('ProductCategory', related_name="product_category", on_delete=models.CASCADE)
-    serial_no = models.IntegerField()
-    spec = models.CharField(max_length=300)
+    colour = models.ManyToManyField('Colour', related_name="color")
+    category = models.ForeignKey('ProductCategory', related_name="product_category", on_delete=models.CASCADE, blank=True, null=True)
+    serial_no = models.CharField(max_length=20)
+    ram = models.CharField(max_length=5, blank=True, null=True)
+    rom = models.CharField(max_length=10, blank=True, null=True)
+    type = models.CharField(max_length=8, choices=Type_Choice, blank=True, null=True)
     quantity = models.IntegerField()
     checked_in = models.BooleanField(default=False)
     sold_out = models.BooleanField(default=False)

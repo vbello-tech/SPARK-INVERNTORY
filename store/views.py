@@ -44,3 +44,67 @@ def search_func(request):
         'info': search_info,
     }
     return render(request, 'store/search_result.html', context)
+
+
+@login_required(login_url='user:login')
+def add_category(request):
+    form = AddCategoryForm(request.POST)
+    if request.method == "POST":
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+    else:
+        form = AddCategoryForm()
+    context = {
+        'form': form
+    }
+    return render(request, 'store/add_category.html', context)
+
+
+@login_required(login_url='user:login')
+def add_colour(request):
+    form = AddColourForm(request.POST)
+    if request.method == "POST":
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+    else:
+        form = AddColourForm()
+    context = {
+        'form': form
+    }
+    return render(request, 'store/add_colour.html', context)
+
+
+class AddProduct(View, LoginRequiredMixin):
+    def get(self, request, *args, **kwargs):
+        form = AddProductForm()
+        context = {
+            'form': form,
+        }
+        return render(self.request, 'store/add_product.html', context)
+
+    def post(self, request, *args, **kwargs):
+        form = AddProductForm(self.request.POST)
+        if form.is_valid():
+            name = form.cleaned_data.get('name')
+            color = form.cleaned_data.get('color')
+            details = form.cleaned_data.get('detail')
+            imei = form.cleaned_data.get('imei')
+            spec = form.cleaned_data.get('spec')
+            type = form.cleaned_data.get('type')
+            print(name, color, details, imei, spec, type)
+
+            new_product, created = Product.objects.get_or_create(
+                name=name,
+                color=color,
+                details=details,
+                imei=imei,
+                spec=spec,
+                type=type,
+                checked_in=True,
+                checked_in_date=timezone.now()
+            )
+            return redirect('/')
+        else:
+            return redirect('/')

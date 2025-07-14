@@ -1,5 +1,5 @@
 from django import forms
-from .models import ProductCategory, Colour
+from .models import ProductCategory, Colour, Product
 from phonenumber_field.widgets import RegionalPhoneNumberWidget
 from phonenumber_field.formfields import PhoneNumberField
 
@@ -7,7 +7,7 @@ from phonenumber_field.formfields import PhoneNumberField
 class AddCategoryForm(forms.ModelForm):
     class Meta:
         model = ProductCategory
-        fields = ('category', 'quantity')
+        fields = ('category', )
 
         widgets = {
             'category': forms.TextInput(
@@ -16,13 +16,35 @@ class AddCategoryForm(forms.ModelForm):
                     "placeholder": 'NAME OF THE CATEGORIES',
                 }
             ),
-            'quantity': forms.TextInput(
+            # 'quantity': forms.TextInput(
+            #     attrs={
+            #         'class': 'form-control',
+            #         "placeholder": 'QUANTITY OF THE CATEGORIES',
+            #     }
+            # ),
+        }
+
+
+class AddColourForm(forms.ModelForm):
+    class Meta:
+        model = Colour
+        fields = ('colour', )
+
+        widgets = {
+            'colour': forms.TextInput(
                 attrs={
                     'class': 'form-control',
-                    "placeholder": 'QUANTITY OF THE CATEGORIES',
+                    "placeholder": 'Add a Colour',
                 }
             ),
         }
+
+
+Type_Choice = [
+    ('Used', 'Used'),
+    ('UK', 'UK'),
+    ('China', 'China'),
+]
 
 
 class AddProductForm(forms.Form):
@@ -33,31 +55,42 @@ class AddProductForm(forms.Form):
 
     color = forms.ModelMultipleChoiceField(required=False,
                                            queryset=Colour.objects.all(),
-                                           widget=forms.TextInput(attrs={
+                                           widget=forms.SelectMultiple(attrs={
                                                'class': 'form-control',
                                                "placeholder": 'COLOR OF THE PHONE',
                                            }))
 
-    type = forms.ModelChoiceField(required=False,
+    category = forms.ModelChoiceField(required=False,
                                   queryset=ProductCategory.objects.all(),
                                   widget=forms.Select(attrs={
                                       'class': 'form-control bootstrap-select',
                                   }))
 
-    serial_no = forms.IntegerField(required=False, widget=forms.NumberInput(attrs={
+    serial_no = forms.IntegerField(required=False, widget=forms.TextInput(attrs={
         'class': 'form-control',
         "placeholder": 'IMEI NUMBER OF THE PHONE',
     }))
 
-    spec = forms.CharField(required=False, widget=forms.TextInput(attrs={
+    ram = forms.CharField(required=False, widget=forms.TextInput(attrs={
         'class': 'form-control',
-        "placeholder": 'RAM AND ROM OF THE PHONE',
+        "placeholder": 'RAM',
+    }))
+
+    rom = forms.CharField(required=False, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        "placeholder": 'ROM ',
     }))
 
     quantity = forms.IntegerField(required=False, widget=forms.NumberInput(attrs={
         'class': 'form-control',
-        "placeholder": 'IMEI NUMBER OF THE PHONE',
+        "placeholder": 'Quantity of the Phone',
     }))
+
+    type = forms.ChoiceField(required=False,
+                             choices=Type_Choice,
+                             widget=forms.Select(attrs={
+                                 'class': 'form-control bootstrap-select',
+                             }))
 
 
 class CheckOutForm(forms.Form):

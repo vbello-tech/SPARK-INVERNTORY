@@ -10,26 +10,26 @@ ALLOWED_HOSTS = [
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
+#
+# DATABASES = {
+#     'default':  dj_database_url.config(
+#         default=config('DATABASE_URL')
+#     )
+# }
+
+# db_from_env = dj_database_url.config(conn_max_age=500, ssl_require=True)
+# DATABASES['default'].update(db_from_env)
 
 DATABASES = {
-    'default':  dj_database_url.config(
-        default="postgres://pigeon:iV1+tY2-qX7+eP1-cN0-@europe-west1-001.proxy.kinsta.app:30156/spark_db"
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': config('DB_DATABASE'),
+        'USER': config('DB_USERNAME'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT'),
+    }
 }
-
-db_from_env = dj_database_url.config(conn_max_age=500, ssl_require=True)
-DATABASES['default'].update(db_from_env)
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': config('DB_DATABASE'),
-#         'USER': config('DB_USERNAME'),
-#         'PASSWORD': config('DB_PASSWORD'),
-#         'HOST': config('DB_HOST'),
-#         'PORT': config('DB_PORT'),
-#     }
-# }
 
 STORAGES = {
     "default": {

@@ -13,7 +13,7 @@ ALLOWED_HOSTS = [
 
 DATABASES = {
     'default':  dj_database_url.config(
-        default=config('DATABASE_URL')
+        default="postgres://pigeon:iV1+tY2-qX7+eP1-cN0-@europe-west1-001.proxy.kinsta.app:30156/spark_db"
     )
 }
 

@@ -44,7 +44,7 @@ STORAGES = {
 
 # SECURE_SSL_REDIRECT = True
 
-CSRF_TRUSTED_ORIGINS = ['https://backendguru.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://sparkinventory.fly.dev/']
 
 CORS_ORIGIN_ALLOW_ALL = True
 
